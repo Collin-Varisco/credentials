@@ -1,0 +1,48 @@
+<html>
+  <script type="text/javascript" src="hash.js"></script>
+  <script type="text/javascript" src="aes.js"></script>
+  <body>
+      <div style="display: inline-block;">
+      <input placeholder="Password" id="inputBar2"></input>
+      <button onclick="login()">Access</button>
+      </div>
+      <p id="s-key"></p>
+      <h1 id="new-encrypted"></h1>
+      <div id="content">
+
+      </div>
+  </body>
+      <script>
+        const addCSS = s => document.head.appendChild(document.createElement("style")).innerHTML=s;
+        addCSS("body { background: black; color: white; }");
+        var encryptedServices = ["kQEmjcs79GEURnm7ub0=", "lAG0E8s79GEZCGQHqQ0=", "lgER+ss79GH3O3XDMLI=", "lwHSUMs79GEp2wIHaVI=", "mQHHN8s79GFWXDgojg==", "mgHPr8s79GHVLYIYtdsQEuY=", "mwE4h8s79GEzst5T40FQTg==", "nAF2Fcs79GFmd8HWkjuN0Hdu", "nAGN2Ms79GGQunsJw9M=", "nQE/x8s79GFoS6FYnw==", "nQHMCMs79GEKpUoEbuFjGvQ=", "ngENEcs79GEeQS3rlbw=", "ngE1Lcs79GHTW7xRG/8=", "nwELGss79GH7mxNjou1nQw==", "oAFGNcs79GGtIMCPU2AV", "oAEqQss79GF8jjl3bBIkN1GWfA=="];
+        var encryptedUsernames = ["kgHcgcs79GEBHmTyq8UEnWsTWNyc757H5ExP2s+c2cHduQ==", "lQERS8s79GHSN//THk75BADnzuAACxmyymuWbhFZhQ==", "lgEDmss79GEOnBk98Y3paV/ksfHrr/Hq+PqwC4ACMFK8", "mAE0iss79GHwr6GE5r74Gdg=", "mQFkxMs79GH/8P+RirWFjTQJQZJ3u2GQOEhiVO4upA==", "mgFwlcs79GFtW4kZYROY1puT4Wy1bZF1KAYpzS1nM8GUvA==", "mwGAacs79GEUQZFll3peT733OPU1ZK9t2E1ZlJDHZfxGFw==", "nAH4A8s79GE2W8/VgtAxvAo9RQ==", "nQEJwMs79GECKuLr1axq6UIyRSA+2AQnqYV3O6AtYlDn/A==", "nQEFwss79GFavDPwPfpoduw=", "nQFdG8s79GFUq6ul0TdFTVPZGUJAKZlbuIu6HCq0eiHVhg==", "ngH0Yss79GEASic79TVnu2U=", "ngEvZ8s79GEABKOFMpBRXlbiMS5zD4P2MjW13tiybpmvBw==", "nwF2Acs79GGPFFt4nxXiyvoplXdR0iWqslf2DcmuEGgBfw==", "oAGLyMs79GFFoJzFXFlTzib7uqZ0f+p8wiZF6k4UObOHsQ==", "oAFYCMs79GGQPw4670oWHyFVWdUqDw=="];
+        var encryptedPasswords = ["kwE8ZMs79GGORSzBfpeg/T5fxyI=", "lQHBbcs79GEcumGTijWF8aR24Pw=", "lwECLss79GFPaDNnoWAzlyCExD4=", "mAEiQss79GE30LTYyACubg==", "mQGScMs79GG6s7KgB4DjyhJEPw==", "mwF7c8s79GEcwhQ8BekI/gphu8HF3UAQ", "nAHq7ss79GH/7C7++rp7/XJD5hI=", "nAGrgcs79GEq4gntLCNx9A8fshClkDEHycTmfKDXXs8D6wJNDFJUljxvU5PYx+r4", "nQGpucs79GH22bC3iz56BeE=", "nQGTi8s79GE+ytZfQI/i7w==", "ngEXZ8s79GEa6suOmA2BaGVbrag=", "ngHhacs79GG6k/nh4DBMCBEB3g==", "nwExZMs79GFzH4o3v6wlWHrKHQ==", "oAESHss79GGO7Rit1If86g==", "oAEtWss79GGDnyJ8fu7m4/lQb2FEDuCsQDmXmvo=", "oAFkHss79GGOQpClKZcBS9cvTw=="];
+        var decryptedServices = [];
+        var decryptedUsernames = [];
+        var decryptedPasswords = [];
+        function login(){
+        document.getElementById("content").innerHTML += "<h1>Service     |     Username     |     Password</h1><br>";
+          var element = document.getElementById("content");
+          
+          var password = SHA256(document.getElementById("inputBar2").value);
+          for(var i = 0; i < encryptedServices.length; i++){
+            var cryptoService = Aes.Ctr.decrypt(encryptedServices[i], password, 256);
+            decryptedServices.push(cryptoService);
+            var cryptoUsername = Aes.Ctr.decrypt(encryptedUsernames[i], password, 256);
+            decryptedUsernames.push(cryptoUsername);
+            var cryptoPassword = Aes.Ctr.decrypt(encryptedPasswords[i], password, 256);
+            decryptedPasswords.push(cryptoPassword);
+          }
+          var element = document.getElementById("content");
+
+          for(var i = 0; i < encryptedServices.length; i++){
+                    document.getElementById("content").innerHTML += "<p>" + decryptedServices[i] + " | " + decryptedUsernames[i] + " | " + decryptedPasswords[i] + "</p><br>";
+          }
+
+
+        }
+        
+      </script>
+
+</html>
